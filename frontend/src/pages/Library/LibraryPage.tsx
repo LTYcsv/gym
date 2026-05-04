@@ -5,16 +5,19 @@ import { getExercises, getExercisePrograms } from '../../api/exercises'
 import type { MuscleGroup, ProgramType } from '../../types'
 
 const MUSCLE_GROUPS: { key: MuscleGroup; label: string; icon: string }[] = [
-  { key: 'back',        label: 'Спина',       icon: '🔙' },
-  { key: 'chest',       label: 'Грудь',       icon: '💪' },
-  { key: 'shoulders',   label: 'Плечи',       icon: '🔺' },
-  { key: 'biceps',      label: 'Бицепс',      icon: '✊' },
-  { key: 'triceps',     label: 'Трицепс',     icon: '✊' },
-  { key: 'quadriceps',  label: 'Квадрицепс',  icon: '🦵' },
-  { key: 'hamstrings',  label: 'Бицепс бедра',icon: '🦵' },
-  { key: 'core',        label: 'Пресс',       icon: '⚡' },
-  { key: 'lower_back',  label: 'Поясница',    icon: '⬇️' },
-  { key: 'calves',      label: 'Икры',        icon: '🦵' },
+  { key: 'back',        label: 'Спина',        icon: '🔙' },
+  { key: 'chest',       label: 'Грудь',        icon: '💪' },
+  { key: 'shoulders',   label: 'Плечи',        icon: '🔺' },
+  { key: 'biceps',      label: 'Бицепс',       icon: '✊' },
+  { key: 'triceps',     label: 'Трицепс',      icon: '✊' },
+  { key: 'quadriceps',  label: 'Квадрицепс',   icon: '🦵' },
+  { key: 'hamstrings',  label: 'Бицепс бедра', icon: '🦵' },
+  { key: 'glutes',      label: 'Ягодицы',      icon: '🍑' },
+  { key: 'core',        label: 'Пресс',        icon: '⚡' },
+  { key: 'lower_back',  label: 'Поясница',     icon: '⬇️' },
+  { key: 'calves',      label: 'Икры',         icon: '🦵' },
+  { key: 'traps',       label: 'Трапеции',     icon: '🏔️' },
+  { key: 'forearms',    label: 'Предплечья',   icon: '💪' },
 ]
 
 const PROGRAM_TYPES: { key: ProgramType; label: string; color: string }[] = [

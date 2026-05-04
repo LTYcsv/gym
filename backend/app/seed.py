@@ -157,6 +157,64 @@ EXERCISES = [
     dict(name="Подъём на носки стоя", muscle_group="calves",
          types=["hypertrophy", "strength"], equipment=["machine", "bodyweight"],
          technique="Медленный подъём, полный диапазон — пятка максимально вниз, носок вверх. Пауза вверху 2 сек."),
+    # ── BACK (additional) ──
+    dict(name="Тяга Т-грифа", muscle_group="back", types=["strength", "hypertrophy"], equipment=["barbell"], technique="Корпус наклонён ~45°, хват нейтральный. Тяните гриф к животу, сводя лопатки в конечной точке. Не округляйте поясницу."),
+    dict(name="Тяга нижнего блока узким хватом", muscle_group="back", types=["hypertrophy"], equipment=["cable"], technique="Сидя, спина прямая, рукоять параллельным хватом. Тяните к пупку, локти вдоль корпуса. Полное растяжение в начале."),
+    dict(name="Шраги со штангой", muscle_group="back", types=["hypertrophy"], equipment=["barbell"], technique="Штанга перед бёдрами, плечи поднимать строго вверх — без вращения. Фиксация 1 сек в верхней точке."),
+    dict(name="Тяга гантели в наклоне двумя руками", muscle_group="back", types=["hypertrophy"], equipment=["dumbbells"], technique="Опора на скамью одной рукой и коленом. Тяга гантели вдоль корпуса, локоть выше спины в финале. Полная амплитуда."),
+    dict(name="Подтягивания обратным хватом", muscle_group="back", types=["strength", "hypertrophy", "calisthenics"], equipment=["bodyweight"], technique="Ладони к себе, хват чуть уже плеч. Бицепс активно участвует. Подбородок выше перекладины, контролируемый спуск."),
+    # ── CHEST (additional) ──
+    dict(name="Жим гантелей на горизонтальной скамье", muscle_group="chest", types=["hypertrophy"], equipment=["dumbbells"], technique="Гантели над грудью, локти 45–75°. Полный диапазон: растяжение внизу, сведение вверху. Нейтральный поясничный прогиб."),
+    dict(name="Жим в тренажёре (Хаммер)", muscle_group="chest", types=["hypertrophy"], equipment=["machine"], technique="Спина полностью прижата к спинке. Жмите ручки вперёд — не вверх. Медленный возврат 3–4 сек."),
+    dict(name="Сведение в кроссовере снизу", muscle_group="chest", types=["hypertrophy"], equipment=["cable"], technique="Блок внизу, тяга вперёд-вверх по дуге. Акцент на верхнюю и среднюю часть груди. Руки слегка согнуты в локтях."),
+    dict(name="Алмазные отжимания", muscle_group="chest", types=["strength", "hypertrophy", "calisthenics"], equipment=["bodyweight"], technique="Руки под грудью, большие и указательные пальцы образуют ромб. Локти двигаются назад, а не в стороны."),
+    # ── SHOULDERS (additional) ──
+    dict(name="Тяга гантелей к подбородку", muscle_group="shoulders", types=["hypertrophy"], equipment=["dumbbells"], technique="Узкий хват, локти ведут движение выше плеч. Гантели держите близко к телу. Не запрокидывайте голову."),
+    dict(name="Жим в тренажёре сидя (плечи)", muscle_group="shoulders", types=["hypertrophy"], equipment=["machine"], technique="Спина плотно к спинке. Жим строго вертикально, локти не уходят назад за линию корпуса."),
+    dict(name="Разведение в стороны в кроссовере", muscle_group="shoulders", types=["hypertrophy"], equipment=["cable"], technique="Блоки на уровне бёдер, тяга в стороны до параллели с полом. Постоянное натяжение кабеля лучше гантелей."),
+    dict(name="Обратные разведения в тренажёре (задняя дельта)", muscle_group="shoulders", types=["hypertrophy"], equipment=["machine"], technique="Тренажёр «бабочка» развёрнут лицом к подушке. Руки разводить горизонтально, акцент на заднюю дельту."),
+    # ── BICEPS (additional) ──
+    dict(name="Сгибание на блоке стоя", muscle_group="biceps", types=["hypertrophy"], equipment=["cable"], technique="Нижний блок, прямая рукоять. Постоянное натяжение по всей амплитуде. Локти прижаты к корпусу."),
+    dict(name="Попеременные сгибания гантелей с супинацией", muscle_group="biceps", types=["hypertrophy"], equipment=["dumbbells"], technique="В нижней точке ладонь смотрит внутрь, в верхней — разворачивается к потолку. Максимальное сокращение бицепса."),
+    dict(name="Сгибание со штангой обратным хватом", muscle_group="biceps", types=["hypertrophy"], equipment=["barbell"], technique="Хват сверху (пронация). Акцент на брахиалис и брахиорадиалис. Локти неподвижны, поясница не включается."),
+    # ── TRICEPS (additional) ──
+    dict(name="Разгибание на блоке прямой рукоятью", muscle_group="triceps", types=["hypertrophy"], equipment=["cable"], technique="Верхний блок, локти прижаты к бокам. Полное разгибание до «щелчка» трицепса. Не раскачивайте корпус."),
+    dict(name="Отжимания на трицепс (обратные)", muscle_group="triceps", types=["hypertrophy", "calisthenics"], equipment=["bodyweight"], technique="Руки на скамье позади, ноги вытянуты. Опускайтесь до 90° в локтях, выжимайте за счёт трицепса."),
+    dict(name="Разгибание гантели двумя руками из-за головы", muscle_group="triceps", types=["hypertrophy"], equipment=["dumbbells"], technique="Сидя, одна гантель двумя руками за головой. Локти смотрят в потолок, движение только в локтевом суставе."),
+    # ── QUADRICEPS (additional) ──
+    dict(name="Гакк-приседания", muscle_group="quadriceps", types=["hypertrophy"], equipment=["machine"], technique="Ноги на платформе, стопы на ширине плеч. Колени над носками, спина прижата. Акцент на квадрицепс."),
+    dict(name="Выпады вперёд", muscle_group="quadriceps", types=["hypertrophy", "strength"], equipment=["bodyweight", "dumbbells"], technique="Шаг вперёд, заднее колено почти касается пола. Переднее колено не выходит за носок. Корпус вертикально."),
+    dict(name="Жим одной ногой (платформа)", muscle_group="quadriceps", types=["hypertrophy"], equipment=["machine"], technique="Одна нога по центру платформы. Позволяет исправить дисбаланс между ногами. Контролируемый спуск."),
+    dict(name="Приседания в Смите", muscle_group="quadriceps", types=["hypertrophy", "strength"], equipment=["machine"], technique="Штанга в тренажёре Смита, ноги чуть впереди. Безопаснее для поясницы, позволяет работать с большим весом."),
+    # ── HAMSTRINGS (additional) ──
+    dict(name="Сгибание ног стоя в тренажёре", muscle_group="hamstrings", types=["hypertrophy"], equipment=["machine"], technique="Одна нога, таз прижат к тренажёру. Полное сгибание, медленный контролируемый возврат 3 сек."),
+    dict(name="Становая тяга на прямых ногах", muscle_group="hamstrings", types=["strength", "hypertrophy"], equipment=["barbell", "dumbbells"], technique="Ноги почти прямые, штанга вдоль голеней. Наклон до горизонтали, спина нейтральная. Чувствуйте растяжение бицепса бедра."),
+    dict(name="Ягодичный мостик", muscle_group="hamstrings", types=["hypertrophy", "strength"], equipment=["barbell", "bodyweight"], technique="Лёжа, ноги согнуты, штанга на бёдрах. Подъём таза до прямой линии, сжатие ягодиц в верхней точке."),
+    # ── CALVES (additional) ──
+    dict(name="Подъём на носки сидя в тренажёре", muscle_group="calves", types=["hypertrophy"], equipment=["machine"], technique="Акцент на камбаловидную мышцу (нога согнута). Полная амплитуда: растяжение внизу, полное сокращение вверху."),
+    dict(name="Подъём на носки с гантелями", muscle_group="calves", types=["hypertrophy"], equipment=["dumbbells"], technique="Стоя, гантели в руках. Подниматься высоко на носках, задержка 1–2 сек. Можно выполнять на возвышении."),
+    dict(name="Подъём на носки на одной ноге", muscle_group="calves", types=["strength", "calisthenics"], equipment=["bodyweight"], technique="Одна нога, опора рукой. Медленный темп 2-2-2. Отлично устраняет асимметрию икр."),
+    # ── CORE (additional) ──
+    dict(name="Велосипед лёжа", muscle_group="core", types=["hypertrophy", "cardio"], equipment=["bodyweight"], technique="Лёжа, ноги в воздухе. Попеременно подтягиваете колено к противоположному локтю. Поясница прижата к полу."),
+    dict(name="Русские скручивания", muscle_group="core", types=["hypertrophy"], equipment=["bodyweight", "dumbbells"], technique="Сидя, корпус 45°, ноги приподняты. Поворот корпуса вправо-влево. Можно держать гантель или блин."),
+    dict(name="Складка на пресс", muscle_group="core", types=["hypertrophy", "calisthenics"], equipment=["bodyweight"], technique="Лёжа, одновременно поднимаете ноги и корпус навстречу друг другу. Пика — руки тянутся к носкам."),
+    # ── LOWER BACK (additional) ──
+    dict(name="Становая тяга сумо", muscle_group="lower_back", types=["strength", "hypertrophy"], equipment=["barbell"], technique="Широкая стойка, носки развёрнуты 45°. Меньше нагрузки на поясницу чем классика. Бёдра и ягодицы активно включаются."),
+    dict(name="Обратные гиперэкстензии", muscle_group="lower_back", types=["hypertrophy"], equipment=["machine", "bodyweight"], technique="Лицом вниз на тренажёре, ноги свисают. Подъём ног до горизонтали. Акцент на ягодицы и низ спины."),
+    dict(name="Доброе утро (Good Morning)", muscle_group="lower_back", types=["strength", "hypertrophy"], equipment=["barbell"], technique="Штанга на трапециях. Наклон вперёд с прямой спиной до ~45°. Движение в тазобедренном суставе, не в пояснице."),
+    # ── TRAPS ──
+    dict(name="Шраги с гантелями", muscle_group="traps", types=["hypertrophy"], equipment=["dumbbells"], technique="Гантели вдоль тела, плечи поднимать строго вверх. Без вращения. Задержка 1–2 сек в пиковом сокращении."),
+    dict(name="Шраги в тренажёре Смита", muscle_group="traps", types=["hypertrophy"], equipment=["machine"], technique="Фиксированная траектория позволяет работать с большим весом и сосредоточиться на сокращении трапеций."),
+    dict(name="Фермерская ходьба", muscle_group="traps", types=["strength", "hypertrophy"], equipment=["dumbbells", "barbell"], technique="Тяжёлые гантели/гири в руках, ходьба на дистанцию. Трапеции статически нагружены всё время. Плечи не опускать."),
+    # ── FOREARMS ──
+    dict(name="Сгибание запястий со штангой", muscle_group="forearms", types=["hypertrophy"], equipment=["barbell"], technique="Предплечья на скамье, ладони вверх. Сгибание кисти с полной амплитудой. Медленное движение, лёгкий вес."),
+    dict(name="Разгибание запястий со штангой", muscle_group="forearms", types=["hypertrophy"], equipment=["barbell"], technique="Предплечья на скамье, ладони вниз. Разгибание кисти. Акцент на тыльную сторону предплечья."),
+    dict(name="Удержание блина", muscle_group="forearms", types=["strength"], equipment=["barbell"], technique="Зажать блин (10–25 кг) кончиками пальцев и удерживать до отказа. Лучшее упражнение на силу хвата."),
+    # ── GLUTES ──
+    dict(name="Ягодичный мостик в тренажёре", muscle_group="glutes", types=["hypertrophy"], equipment=["machine"], technique="Специальный тренажёр для мостика. Позволяет работать с большим весом безопасно. Фокус на сжатии ягодиц."),
+    dict(name="Отведение ноги в кроссовере", muscle_group="glutes", types=["hypertrophy"], equipment=["cable"], technique="Манжета на щиколотке, нижний блок. Отводить ногу назад-вверх. Корпус слегка наклонён вперёд, не раскачивайтесь."),
+    dict(name="Сумо-приседания с гантелью", muscle_group="glutes", types=["hypertrophy"], equipment=["dumbbells"], technique="Широкая стойка, носки 45°, гантель между ног. Акцент на ягодицы и приводящие мышцы. Колени над носками."),
+    dict(name="Гипертрастер (Kickback) в тренажёре", muscle_group="glutes", types=["hypertrophy"], equipment=["machine"], technique="Стоя лицом к тренажёру, толкать платформу назад-вверх ягодичным усилием. Нога почти прямая в пике."),
 ]
 
 # V-Shape program days & exercises
