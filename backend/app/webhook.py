@@ -1,6 +1,4 @@
 from fastapi import APIRouter, Request
-from app.config import settings
-import httpx
 
 router = APIRouter()
 
