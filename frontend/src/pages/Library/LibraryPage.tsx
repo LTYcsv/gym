@@ -20,6 +20,14 @@ const MUSCLE_GROUPS: { key: MuscleGroup; label: string; icon: string }[] = [
   { key: 'forearms',    label: 'Предплечья',   icon: '💪' },
 ]
 
+const EQUIPMENT_LABEL: Record<string, string> = {
+  barbell:    'Штанга',
+  dumbbells:  'Гантели',
+  cable:      'Блок',
+  machine:    'Тренажёр',
+  bodyweight: 'Своё тело',
+}
+
 const PROGRAM_TYPES: { key: ProgramType; label: string; color: string }[] = [
   { key: 'strength',     label: 'Сила',        color: '#ff6b35' },
   { key: 'hypertrophy',  label: 'Масса',       color: '#4d9fff' },
@@ -133,7 +141,7 @@ export default function LibraryPage() {
                   })}
                   {ex.equipment.map(eq => (
                     <span key={eq} style={{ fontSize: 10, fontWeight: 600, padding: '2px 6px', borderRadius: 5, color: 'var(--muted)', border: '1px solid var(--border)' }}>
-                      {eq}
+                      {EQUIPMENT_LABEL[eq] ?? eq}
                     </span>
                   ))}
                 </div>
