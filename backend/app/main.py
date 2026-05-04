@@ -11,6 +11,7 @@ from app.sessions.router import router as sessions_router
 from app.weights.router import router as weights_router
 from app.user_programs.router import router as user_programs_router
 from app.stats.router import router as stats_router
+from app.webhook import router as webhook_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -51,6 +52,7 @@ app.include_router(sessions_router, prefix="/api")
 app.include_router(weights_router, prefix="/api")
 app.include_router(user_programs_router, prefix="/api")
 app.include_router(stats_router, prefix="/api")
+app.include_router(webhook_router, prefix="/api")
 
 
 @app.get("/api/health")
