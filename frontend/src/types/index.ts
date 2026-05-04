@@ -41,8 +41,8 @@ export interface Exercise {
 
 export interface WorkoutDaySummary {
   id: string
-  label: string | null
-  title: string | null
+  label: string
+  title: string
   subtitle: string | null
   day_number: number
   exercise_count: number
@@ -63,8 +63,8 @@ export interface WorkoutDay {
   program_id: string
   program_type: ProgramType
   program_slug: string
-  label: string | null
-  title: string | null
+  label: string
+  title: string
   subtitle: string | null
   day_number: number
   workout_exercises: WorkoutExercise[]

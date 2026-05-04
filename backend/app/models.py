@@ -54,8 +54,8 @@ class WorkoutDay(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     program_id = Column(UUID(as_uuid=True), ForeignKey("programs.id"), nullable=False)
-    label = Column(String(50))
-    title = Column(String(100))
+    label = Column(String(50), nullable=False)
+    title = Column(String(100), nullable=False)
     subtitle = Column(String(100))
     day_number = Column(Integer, nullable=False)
 

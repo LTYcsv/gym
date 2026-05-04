@@ -20,8 +20,8 @@ class WorkoutDayOut(BaseModel):
     program_id: UUID
     program_type: str        # тип программы — нужен для фильтрации свапа
     program_slug: str
-    label: str | None
-    title: str | None
+    label: str
+    title: str
     subtitle: str | None
     day_number: int
     workout_exercises: list[WorkoutExerciseOut]
@@ -31,8 +31,8 @@ class WorkoutDayOut(BaseModel):
 
 class WorkoutDaySummary(BaseModel):
     id: UUID
-    label: str | None
-    title: str | None
+    label: str
+    title: str
     subtitle: str | None
     day_number: int
     exercise_count: int
