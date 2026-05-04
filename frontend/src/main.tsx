@@ -16,22 +16,23 @@ async function initAuth() {
     const { token } = await authWithTelegram(tg.initData)
     localStorage.setItem('token', token)
   } else {
-    // локальная разработка
     const { token } = await authDev()
     localStorage.setItem('token', token)
   }
 }
 
-initAuth().catch(() => {})
-
 const queryClient = new QueryClient()
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </QueryClientProvider>
-  </StrictMode>,
-)
+initAuth()
+  .catch(() => {})
+  .finally(() => {
+    createRoot(document.getElementById('root')!).render(
+      <StrictMode>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </StrictMode>,
+    )
+  })

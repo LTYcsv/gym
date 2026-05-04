@@ -1,20 +1,17 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.auth.deps import get_current_user
 from app.models import User
 from app.programs import schemas, service
 from app.sessions.service import get_weekly_sessions
-from app.user_programs.service import get_user_program
+from app.user_programs.service import get_all_user_programs
 
 router = APIRouter(prefix="/programs", tags=["programs"])
 
 
 @router.get("/", response_model=list[schemas.ProgramOut])
-def list_programs(
-    db: Session = Depends(get_db),
-    user: User | None = Depends(lambda authorization=None, db=Depends(get_db): None),
-):
+def list_programs(db: Session = Depends(get_db)):
     programs = service.list_programs(db)
     return [schemas.ProgramOut.model_validate(p) for p in programs]
 
@@ -23,19 +20,22 @@ def list_programs(
 def list_programs_with_progress(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
+    x_timezone: str = Header(default="UTC"),
 ):
     programs = service.list_programs(db)
-    weekly = get_weekly_sessions(db, str(user.id))
+    weekly = get_weekly_sessions(db, str(user.id), tz=x_timezone)
     counts: dict[str, int] = {}
     for s in weekly:
         key = str(s.program_id)
         counts[key] = counts.get(key, 0) + 1
 
+    enrollments = {str(e.program_id): e for e in get_all_user_programs(db, str(user.id))}
+
     result = []
     for p in programs:
         out = schemas.ProgramOut.model_validate(p)
         out.weekly_sessions = counts.get(str(p.id), 0)
-        enrollment = get_user_program(db, str(user.id), str(p.id))
+        enrollment = enrollments.get(str(p.id))
         out.user_days_per_week = enrollment.days_per_week if enrollment else None
         result.append(out)
     return result

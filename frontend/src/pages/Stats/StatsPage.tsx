@@ -63,7 +63,7 @@ function MonthCalendar({ dates }: { dates: string[] }) {
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today)
     d.setDate(today.getDate() - i)
-    days.push({ date: d.toISOString().slice(0, 10), inMonth: true })
+    days.push({ date: d.toLocaleDateString('sv'), inMonth: true })
   }
 
   return (
@@ -71,7 +71,7 @@ function MonthCalendar({ dates }: { dates: string[] }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: 4 }}>
         {days.map(({ date }) => {
           const worked = dateSet.has(date)
-          const isToday = date === today.toISOString().slice(0, 10)
+          const isToday = date === today.toLocaleDateString('sv')
           return (
             <div key={date} style={{
               aspectRatio: '1',
@@ -105,7 +105,7 @@ function StreakCards({ weekStreak, workoutStreak }: { weekStreak: number; workou
         <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 40, lineHeight: 1, color: '#5ef29a' }}>
           {workoutStreak}
         </p>
-        <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>⚡ без пропусков</p>
+        <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>⚡ интервал ≤7 дней</p>
       </Card>
     </div>
   )

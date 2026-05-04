@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
 from sqlalchemy.orm import Session as DBSession
 from app.models import WorkoutSession
+from app.utils import get_week_start_utc
 
 
 def create_session(db: DBSession, user_id: str, workout_day_id: str, program_id: str) -> WorkoutSession:
@@ -15,9 +15,8 @@ def create_session(db: DBSession, user_id: str, workout_day_id: str, program_id:
     return session
 
 
-def get_weekly_sessions(db: DBSession, user_id: str) -> list[WorkoutSession]:
-    now = datetime.utcnow()
-    week_start = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+def get_weekly_sessions(db: DBSession, user_id: str, tz: str = "UTC") -> list[WorkoutSession]:
+    week_start = get_week_start_utc(tz)
     return (
         db.query(WorkoutSession)
         .filter(WorkoutSession.user_id == user_id, WorkoutSession.completed_at >= week_start)
@@ -26,14 +25,13 @@ def get_weekly_sessions(db: DBSession, user_id: str) -> list[WorkoutSession]:
     )
 
 
-def get_program_session_counts(db: DBSession, user_id: str, program_id: str) -> dict:
+def get_program_session_counts(db: DBSession, user_id: str, program_id: str, tz: str = "UTC") -> dict:
     total = (
         db.query(WorkoutSession)
         .filter_by(user_id=user_id, program_id=program_id)
         .count()
     )
-    now = datetime.utcnow()
-    week_start = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = get_week_start_utc(tz)
     weekly = (
         db.query(WorkoutSession)
         .filter(

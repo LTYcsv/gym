@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getWorkoutDay } from '../../api/programs'
@@ -18,10 +18,23 @@ export default function WorkoutDayPage() {
   const goBack = useCallback(() => navigate(`/programs/${slug}`), [navigate, slug])
   useBackButton(goBack)
 
-  const [done, setDone] = useState<Record<string, boolean>>({})
+  const storageKey = `workout-${dayId}`
+
+  function loadSession<T>(field: string, fallback: T): T {
+    try {
+      const raw = sessionStorage.getItem(`${storageKey}:${field}`)
+      return raw ? JSON.parse(raw) : fallback
+    } catch { return fallback }
+  }
+
+  function saveSession(field: string, value: unknown) {
+    sessionStorage.setItem(`${storageKey}:${field}`, JSON.stringify(value))
+  }
+
+  const [done, setDone] = useState<Record<string, boolean>>(() => loadSession('done', {}))
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
   const [swapTarget, setSwapTarget] = useState<WorkoutExercise | null>(null)
-  const [overrides, setOverrides] = useState<Record<string, Exercise>>({})
+  const [overrides, setOverrides] = useState<Record<string, Exercise>>(() => loadSession('overrides', {}))
   const [weights, setWeights] = useState<Record<string, string>>({})
   const [savedWeights, setSavedWeights] = useState<Record<string, boolean>>({})
 
@@ -31,14 +44,19 @@ export default function WorkoutDayPage() {
     enabled: !!slug && !!dayId,
   })
 
-  useQuery({
+  const { data: dayWeightsData } = useQuery({
     queryKey: ['dayWeights', dayId],
     queryFn: () => getDayWeights(dayId!),
     enabled: !!dayId,
-    onSuccess: (data: Record<string, number>) => {
-      setWeights(Object.fromEntries(Object.entries(data).map(([k, v]) => [k, String(v)])))
-    },
-  } as any)
+  })
+
+  useEffect(() => {
+    if (!dayWeightsData) return
+    setWeights(Object.fromEntries(Object.entries(dayWeightsData).map(([k, v]) => [k, String(v)])))
+  }, [dayWeightsData])
+
+  useEffect(() => { saveSession('done', done) }, [done])
+  useEffect(() => { saveSession('overrides', overrides) }, [overrides])
 
   const { data: alternatives } = useQuery({
     queryKey: ['alternatives', swapTarget?.exercise.id, day?.program_type],
@@ -49,6 +67,8 @@ export default function WorkoutDayPage() {
   const completeMutation = useMutation({
     mutationFn: () => completeWorkout(dayId!, day!.program_id),
     onSuccess: () => {
+      sessionStorage.removeItem(`${storageKey}:done`)
+      sessionStorage.removeItem(`${storageKey}:overrides`)
       haptic('success')
       qc.invalidateQueries({ queryKey: ['programs'] })
       qc.invalidateQueries({ queryKey: ['session-count', day!.program_id] })
@@ -69,10 +89,10 @@ export default function WorkoutDayPage() {
     setSavedWeights(s => ({ ...s, [weId]: false }))
   }
 
-  function handleSaveWeight(weId: string) {
+  function handleSaveWeight(weId: string, exerciseId: string) {
     const val = parseFloat(weights[weId])
     if (isNaN(val)) return
-    saveWeight(weId, val).then(() => {
+    saveWeight(weId, val, exerciseId).then(() => {
       setSavedWeights(s => ({ ...s, [weId]: true }))
       setTimeout(() => setSavedWeights(s => ({ ...s, [weId]: false })), 2000)
     })
@@ -162,7 +182,7 @@ export default function WorkoutDayPage() {
                       }}
                     />
                     <span style={{ fontSize: 12, color: 'var(--muted)' }}>кг</span>
-                    <button onClick={() => handleSaveWeight(we.id)}
+                    <button onClick={() => handleSaveWeight(we.id, ex.id)}
                       style={{
                         padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 700,
                         background: isSaved ? 'rgba(94,242,154,0.15)' : 'rgba(77,159,255,0.1)',

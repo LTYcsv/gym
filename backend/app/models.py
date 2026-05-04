@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, BigInteger, Float, Text, Boolean, ForeignKey, DateTime, UniqueConstraint
+from sqlalchemy import Column, String, Integer, BigInteger, Float, Text, Boolean, ForeignKey, DateTime, UniqueConstraint, Index
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
 from sqlalchemy.orm import relationship
 from app.database import Base
@@ -96,6 +96,10 @@ class WorkoutSession(Base):
     workout_day = relationship("WorkoutDay")
     program = relationship("Program")
 
+    __table_args__ = (
+        Index("ix_workout_sessions_user_completed", "user_id", "completed_at"),
+    )
+
 
 class UserProgram(Base):
     """Участие пользователя в программе с его персональными настройками."""
@@ -107,7 +111,10 @@ class UserProgram(Base):
     days_per_week = Column(Integer, nullable=False)
     started_at = Column(DateTime, default=datetime.utcnow)
 
-    __table_args__ = (UniqueConstraint("user_id", "program_id"),)
+    __table_args__ = (
+        UniqueConstraint("user_id", "program_id"),
+        Index("ix_user_programs_user_id", "user_id"),
+    )
 
     user = relationship("User")
     program = relationship("Program")
@@ -141,3 +148,7 @@ class UserWeightLog(Base):
 
     user = relationship("User")
     exercise = relationship("Exercise")
+
+    __table_args__ = (
+        Index("ix_user_weight_logs_user_exercise", "user_id", "exercise_id"),
+    )

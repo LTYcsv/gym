@@ -33,7 +33,7 @@ def auth_telegram(body: schemas.AuthRequest, db: Session = Depends(get_db)):
 @router.post("/dev", response_model=schemas.AuthResponse)
 def auth_dev(db: Session = Depends(get_db)):
     """Только для локальной разработки."""
-    if settings.SECRET_KEY != "dev-secret-change-in-prod":
+    if not settings.DEBUG:
         raise HTTPException(403, "Not available in production")
 
     user = service.get_or_create_user(db, {"id": 0, "first_name": "Dev", "username": "dev"})

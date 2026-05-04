@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.config import settings
 from app.programs.router import router as programs_router
 from app.exercises.router import router as exercises_router
 from app.auth.router import router as auth_router
@@ -12,9 +13,9 @@ app = FastAPI(title="Gym API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "X-Timezone"],
 )
 
 app.include_router(auth_router, prefix="/api")

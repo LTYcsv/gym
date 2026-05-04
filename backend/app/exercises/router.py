@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.exercises import schemas, service
-from app.models import Exercise
+from app.models import Exercise, WorkoutExercise, WorkoutDay, Program
 
 router = APIRouter(prefix="/exercises", tags=["exercises"])
 
@@ -28,7 +28,6 @@ def get_alternatives(
 
 @router.get("/{exercise_id}/programs")
 def get_exercise_programs(exercise_id: str, db: Session = Depends(get_db)):
-    from app.models import WorkoutExercise, WorkoutDay, Program
     rows = (
         db.query(Program.name, Program.slug, WorkoutDay.label, WorkoutDay.title)
         .join(WorkoutDay, Program.id == WorkoutDay.program_id)

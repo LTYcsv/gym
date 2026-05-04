@@ -1,9 +1,10 @@
 from uuid import UUID
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class WeightUpsert(BaseModel):
-    weight_kg: float
+    weight_kg: float = Field(gt=0, le=1000)
+    exercise_id: UUID | None = None
 
 
 class WeightOut(BaseModel):

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.auth.deps import get_current_user
@@ -22,8 +22,9 @@ def complete_workout(
 def weekly_sessions(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
+    x_timezone: str = Header(default="UTC"),
 ):
-    return service.get_weekly_sessions(db, str(user.id))
+    return service.get_weekly_sessions(db, str(user.id), tz=x_timezone)
 
 
 @router.get("/count/{program_id}")
@@ -31,8 +32,9 @@ def program_session_count(
     program_id: str,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
+    x_timezone: str = Header(default="UTC"),
 ):
-    return service.get_program_session_counts(db, str(user.id), program_id)
+    return service.get_program_session_counts(db, str(user.id), program_id, tz=x_timezone)
 
 
 @router.get("/history", response_model=list[schemas.SessionOut])

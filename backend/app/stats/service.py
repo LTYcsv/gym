@@ -3,11 +3,12 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.models import WorkoutSession, WorkoutExercise, Exercise, UserWeightLog, UserProgram
 from app.stats.schemas import StatsOut, MuscleGroupCount, RecordItem
+from app.utils import get_week_start_utc, get_now_utc
 
 
-def get_stats(db: Session, user_id: str) -> StatsOut:
-    now = datetime.utcnow()
-    week_start = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+def get_stats(db: Session, user_id: str, tz: str = "UTC") -> StatsOut:
+    now = get_now_utc(tz)
+    week_start = get_week_start_utc(tz)
     month_ago = now - timedelta(days=30)
 
     # ── Weekly done ──────────────────────────────────────────────
@@ -58,7 +59,7 @@ def get_stats(db: Session, user_id: str) -> StatsOut:
     week_streak = _calc_week_streak(all_sessions, now)
 
     # ── Workout streak (consecutive sessions, gap <= 7 days) ─────
-    workout_streak = _calc_workout_streak(all_sessions)
+    workout_streak = _calc_workout_streak(all_sessions, now)
 
     # ── Personal records ─────────────────────────────────────────
     pr_rows = (
@@ -101,7 +102,7 @@ def _calc_week_streak(sessions: list, now: datetime) -> int:
 
     streak = 0
     check = now
-    while True:
+    while streak < 1000:
         iso = check.isocalendar()
         if (iso[0], iso[1]) in weeks_with_sessions:
             streak += 1
@@ -111,10 +112,13 @@ def _calc_week_streak(sessions: list, now: datetime) -> int:
     return streak
 
 
-def _calc_workout_streak(sessions: list) -> int:
+def _calc_workout_streak(sessions: list, now: datetime) -> int:
     if not sessions:
         return 0
     sorted_sessions = sorted(sessions, key=lambda s: s.completed_at, reverse=True)
+    # Если с последней тренировки прошло больше 7 дней — стрик истёк
+    if (now - sorted_sessions[0].completed_at).days > 7:
+        return 0
     streak = 1
     for i in range(1, len(sorted_sessions)):
         gap = (sorted_sessions[i - 1].completed_at - sorted_sessions[i].completed_at).days
