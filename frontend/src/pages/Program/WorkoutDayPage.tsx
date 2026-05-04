@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getWorkoutDay } from '../../api/programs'
@@ -38,6 +38,12 @@ export default function WorkoutDayPage() {
   const [overrides, setOverrides] = useState<Record<string, Exercise>>(() => loadSession('overrides', {}))
   const [weights, setWeights] = useState<Record<string, string>>({})
   const [savedWeights, setSavedWeights] = useState<Record<string, boolean>>({})
+  const saveTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({})
+
+  useEffect(() => {
+    const timers = saveTimers.current
+    return () => { Object.values(timers).forEach(clearTimeout) }
+  }, [])
 
   const { data: day, isLoading, isError, refetch } = useQuery({
     queryKey: ['workoutDay', dayId],
@@ -96,7 +102,8 @@ export default function WorkoutDayPage() {
     if (isNaN(val)) return
     saveWeight(weId, val, exerciseId).then(() => {
       setSavedWeights(s => ({ ...s, [weId]: true }))
-      setTimeout(() => setSavedWeights(s => ({ ...s, [weId]: false })), 2000)
+      clearTimeout(saveTimers.current[weId])
+      saveTimers.current[weId] = setTimeout(() => setSavedWeights(s => ({ ...s, [weId]: false })), 2000)
     })
   }
 
