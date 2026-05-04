@@ -1,6 +1,9 @@
+import logging
 from sqlalchemy.orm import Session as DBSession
 from app.models import WorkoutSession
 from app.utils import get_week_start_utc
+
+logger = logging.getLogger(__name__)
 
 
 def create_session(db: DBSession, user_id: str, workout_day_id: str, program_id: str) -> WorkoutSession:
@@ -12,6 +15,7 @@ def create_session(db: DBSession, user_id: str, workout_day_id: str, program_id:
     db.add(session)
     db.commit()
     db.refresh(session)
+    logger.info("workout completed user=%s day=%s program=%s", user_id, workout_day_id, program_id)
     return session
 
 

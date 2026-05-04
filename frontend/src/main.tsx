@@ -6,6 +6,13 @@ import { authWithTelegram, authDev } from './api/auth'
 import App from './App'
 import './index.css'
 
+window.onerror = (msg, src, line, col, err) => {
+  console.error('[uncaught]', { msg, src, line, col, stack: err?.stack })
+}
+window.onunhandledrejection = (e) => {
+  console.error('[unhandled rejection]', e.reason)
+}
+
 const tg = (window as any).Telegram?.WebApp
 
 async function initAuth() {

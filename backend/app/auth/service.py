@@ -1,10 +1,13 @@
 import hashlib
 import hmac
 import json
+import logging
 from urllib.parse import parse_qsl
 from sqlalchemy.orm import Session
 from app.config import settings
 from app.models import User
+
+logger = logging.getLogger(__name__)
 
 
 def validate_init_data(init_data: str) -> dict:
@@ -46,4 +49,5 @@ def get_or_create_user(db: Session, tg_user: dict) -> User:
         db.add(user)
         db.commit()
         db.refresh(user)
+        logger.info("new user tg_id=%s username=%s", tg_user["id"], tg_user.get("username"))
     return user
