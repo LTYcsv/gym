@@ -10,21 +10,13 @@ export default function OnboardingSheet({ programName, onConfirm }: Props) {
   const [selected, setSelected] = useState(3)
 
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 100,
-      background: 'rgba(0,0,0,0.7)',
-      display: 'flex', alignItems: 'flex-end',
-    }}>
-      <div style={{
-        width: '100%', background: 'var(--surface)',
-        borderRadius: '20px 20px 0 0',
-        padding: '28px 24px 40px',
-      }}>
+    <div className="modal-overlay" style={{ background: 'rgba(0,0,0,0.7)' }}>
+      <div className="modal-sheet" style={{ padding: '28px 24px 40px' }}>
         <div style={{
           width: 40, height: 4, borderRadius: 2,
           background: 'var(--border)', margin: '0 auto 24px',
         }} />
-        <h2 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 28, marginBottom: 6 }}>
+        <h2 className="heading" style={{ fontSize: 28, marginBottom: 6 }}>
           {programName}
         </h2>
         <p style={{ color: 'var(--muted)', fontSize: 14, marginBottom: 28 }}>

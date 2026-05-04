@@ -101,15 +101,15 @@ export default function WorkoutDayPage() {
   return (
     <div style={{ minHeight: '100dvh', paddingBottom: 120 }}>
       {/* Header */}
-      <div style={{ padding: '48px 20px 16px', borderBottom: '1px solid var(--border)' }}>
-        <button onClick={goBack} style={{ fontSize: 13, color: 'var(--muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 12 }}>← {day.label}</button>
-        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 36, color: 'var(--accent-a)' }}>{day.title}</h1>
+      <div className="page-header">
+        <button onClick={goBack} className="back-btn" style={{ marginBottom: 12 }}>← {day.label}</button>
+        <h1 className="heading" style={{ fontSize: 36, color: 'var(--accent-a)' }}>{day.title}</h1>
         {day.subtitle && <p style={{ fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>{day.subtitle}</p>}
       </div>
 
       {/* Progress */}
       <div style={{ padding: '12px 20px' }}>
-        <p style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)', marginBottom: 6 }}>
+        <p className="label" style={{ letterSpacing: '0.08em', marginBottom: 6 }}>
           {completedCount} / {exercises.length} выполнено
         </p>
         <div style={{ height: 3, background: 'var(--surface2)', borderRadius: 3 }}>
@@ -133,11 +133,11 @@ export default function WorkoutDayPage() {
               {/* Top row */}
               <div style={{ padding: '14px 16px 12px', display: 'flex', alignItems: 'flex-start', gap: 14, cursor: 'pointer' }}
                 onClick={() => setExpanded(s => ({ ...s, [we.id]: !s[we.id] }))}>
-                <span style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 28, color: 'var(--accent-a)', minWidth: 28 }}>
+                <span className="heading" style={{ fontSize: 28, color: 'var(--accent-a)', minWidth: 28 }}>
                   {String(we.order + 1).padStart(2, '0')}
                 </span>
                 <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--muted)', marginBottom: 3 }}>
+                  <p className="label" style={{ fontSize: 10, letterSpacing: '0.1em', marginBottom: 3 }}>
                     {ex.muscle_group}
                   </p>
                   <p style={{ fontSize: 15, fontWeight: 700, textDecoration: isDone ? 'line-through' : 'none' }}>{ex.name}</p>
@@ -154,11 +154,11 @@ export default function WorkoutDayPage() {
 
               {/* Tags */}
               <div style={{ padding: '0 16px 12px 58px', display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
-                {we.sets && <span style={{ fontSize: 11, fontWeight: 700, borderRadius: 7, padding: '3px 9px', color: 'var(--accent-a)', border: '1px solid rgba(77,159,255,0.25)', background: 'rgba(77,159,255,0.08)' }}>{we.sets} сета</span>}
-                {we.reps && <span style={{ fontSize: 11, fontWeight: 700, borderRadius: 7, padding: '3px 9px', color: 'var(--accent-c)', border: '1px solid rgba(94,242,154,0.25)', background: 'rgba(94,242,154,0.08)' }}>{we.reps} повт.</span>}
-                {we.rest_seconds && <span style={{ fontSize: 11, fontWeight: 700, borderRadius: 7, padding: '3px 9px', color: 'var(--muted)', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.04)' }}>⏱ {we.rest_seconds}с</span>}
+                {we.sets && <span className="tag" style={{ color: 'var(--accent-a)', border: '1px solid rgba(77,159,255,0.25)', background: 'rgba(77,159,255,0.08)' }}>{we.sets} сета</span>}
+                {we.reps && <span className="tag" style={{ color: 'var(--accent-c)', border: '1px solid rgba(94,242,154,0.25)', background: 'rgba(94,242,154,0.08)' }}>{we.reps} повт.</span>}
+                {we.rest_seconds && <span className="tag" style={{ color: 'var(--muted)', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.04)' }}>⏱ {we.rest_seconds}с</span>}
                 <button onClick={e => { e.stopPropagation(); setSwapTarget(we) }}
-                  style={{ fontSize: 11, fontWeight: 700, borderRadius: 7, padding: '3px 10px', color: 'var(--accent-b)', border: '1px solid rgba(255,107,53,0.3)', background: 'rgba(255,107,53,0.08)', cursor: 'pointer' }}>
+                  className="tag" style={{ color: 'var(--accent-b)', border: '1px solid rgba(255,107,53,0.3)', background: 'rgba(255,107,53,0.08)', cursor: 'pointer' }}>
                   ⇄ Заменить
                 </button>
               </div>
@@ -200,7 +200,7 @@ export default function WorkoutDayPage() {
       </div>
 
       {/* Complete button */}
-      <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '16px 20px', background: 'rgba(13,13,13,0.95)', borderTop: '1px solid var(--border)', backdropFilter: 'blur(12px)' }}>
+      <div className="bottom-bar">
         <button
           onClick={() => completeMutation.mutate()}
           disabled={!allDone || completeMutation.isPending}
@@ -217,13 +217,12 @@ export default function WorkoutDayPage() {
 
       {/* Swap modal */}
       {swapTarget && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 100, display: 'flex', alignItems: 'flex-end' }}
-          onClick={() => setSwapTarget(null)}>
-          <div style={{ background: 'var(--surface)', borderRadius: '20px 20px 0 0', width: '100%', maxHeight: '80dvh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+        <div className="modal-overlay" onClick={() => setSwapTarget(null)}>
+          <div className="modal-sheet" style={{ maxHeight: '80dvh', display: 'flex', flexDirection: 'column' }}
             onClick={e => e.stopPropagation()}>
             <div style={{ padding: '18px 20px 12px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
-                <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--muted)', marginBottom: 4 }}>Заменить · {day.program_type}</p>
+                <p className="label" style={{ letterSpacing: '0.1em', marginBottom: 4 }}>Заменить · {day.program_type}</p>
                 <p style={{ fontSize: 15, fontWeight: 700 }}>{swapTarget.exercise.name}</p>
               </div>
               <button onClick={() => setSwapTarget(null)} style={{ width: 32, height: 32, borderRadius: '50%', border: '1px solid var(--border)', background: 'var(--surface2)', color: 'var(--muted)', cursor: 'pointer' }}>✕</button>

@@ -17,10 +17,8 @@ const MUSCLE_COLORS: Record<string, string> = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 28 }}>
-      <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--muted)', marginBottom: 12 }}>
-        {title}
-      </p>
+    <div className="section">
+      <p className="section-title">{title}</p>
       {children}
     </div>
   )
@@ -28,7 +26,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '18px 20px' }}>
+    <div className="card">
       {children}
     </div>
   )
@@ -41,7 +39,7 @@ function WeeklyProgress({ done, planned }: { done: number; planned: number }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 14 }}>
         <div>
           <p style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, marginBottom: 4 }}>Выполнено</p>
-          <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 48, lineHeight: 1, color: 'var(--accent)' }}>
+          <p className="heading" style={{ fontSize: 48, lineHeight: 1, color: 'var(--accent)' }}>
             {done}<span style={{ fontSize: 24, color: 'var(--muted)' }}>/{planned || '—'}</span>
           </p>
         </div>
@@ -95,14 +93,14 @@ function StreakCards({ weekStreak, workoutStreak }: { weekStreak: number; workou
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
       <Card>
         <p style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, marginBottom: 6 }}>Недель подряд</p>
-        <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 40, lineHeight: 1, color: '#ffd166' }}>
+        <p className="heading" style={{ fontSize: 40, lineHeight: 1, color: '#ffd166' }}>
           {weekStreak}
         </p>
         <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>🔥 серия</p>
       </Card>
       <Card>
         <p style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, marginBottom: 6 }}>Тренировок подряд</p>
-        <p style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 40, lineHeight: 1, color: '#5ef29a' }}>
+        <p className="heading" style={{ fontSize: 40, lineHeight: 1, color: '#5ef29a' }}>
           {workoutStreak}
         </p>
         <p style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>⚡ интервал ≤7 дней</p>
@@ -147,7 +145,7 @@ function Records({ records }: { records: { exercise_name: string; weight_kg: num
               </p>
             </div>
             <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 12 }}>
-              <span style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 22, color: '#ffd166' }}>
+              <span className="heading" style={{ fontSize: 22, color: '#ffd166' }}>
                 {r.weight_kg}
               </span>
               <span style={{ fontSize: 12, color: 'var(--muted)', marginLeft: 3 }}>кг</span>
@@ -166,12 +164,12 @@ export default function StatsPage() {
   })
 
   return (
-    <div style={{ minHeight: '100dvh', padding: '48px 20px var(--nav-height)' }}>
+    <div className="page-padded">
       <div style={{ marginBottom: 32 }}>
-        <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 8 }}>
+        <p className="label" style={{ letterSpacing: '0.14em', marginBottom: 8 }}>
           Твой прогресс
         </p>
-        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 48, letterSpacing: '0.03em', lineHeight: 1 }}>
+        <h1 className="heading" style={{ fontSize: 48, letterSpacing: '0.03em', lineHeight: 1 }}>
           STATS
         </h1>
       </div>

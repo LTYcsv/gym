@@ -26,3 +26,175 @@ button { font-family: inherit; }
 
 ::-webkit-scrollbar { display: none; }
 * { scrollbar-width: none; }
+
+/* ─── Layout ─────────────────────────────────────────────── */
+
+/* Full-height page with bottom nav clearance + top/side padding */
+.page-padded {
+  min-height: 100dvh;
+  padding: 48px 20px var(--nav-height);
+}
+
+/* Full-height page, only clears bottom nav */
+.page {
+  min-height: 100dvh;
+  padding-bottom: var(--nav-height);
+}
+
+/* Top section header used on program/workout pages */
+.page-header {
+  padding: 48px 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+
+.heading {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Small all-caps muted label */
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+/* ─── Card ───────────────────────────────────────────────── */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+
+/* ─── Tags / Badges ──────────────────────────────────────── */
+
+/* Generic pill tag — color-related styles stay inline */
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 7px;
+  padding: 3px 9px;
+}
+
+/* Pill used in Dashboard program cards */
+.badge {
+  font-size: 11px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+/* ─── Navigation ─────────────────────────────────────────── */
+
+/* Back button shared by ProgramPage and WorkoutDayPage */
+.back-btn {
+  font-size: 13px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+/* ─── Bottom bar (WorkoutDay complete button) ────────────── */
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: rgba(13,13,13,0.95);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+/* ─── Modal overlay + sheet ──────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal-sheet {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ─── BottomNav ──────────────────────────────────────────── */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: rgba(13,13,13,0.95);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 20;
+}
+
+.bottom-nav__tab {
+  flex: 1;
+  padding: 12px 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: 'Manrope', sans-serif;
+  transition: color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav__tab-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bottom-nav__indicator {
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom) + 0px);
+  width: 32px;
+  height: 2px;
+  background: var(--accent-a);
+  border-radius: 2px;
+}
+
+/* ─── Stats sections ─────────────────────────────────────── */
+
+.section {
+  margin-bottom: 28px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}

@@ -42,27 +42,26 @@ function ProgramCard({ p }: { p: Program }) {
   const meta = TYPE_META[p.type] ?? { label: p.type, color: 'var(--muted)' }
   return (
     <Link to={`/programs/${p.slug}`} style={{ textDecoration: 'none' }}>
-      <div style={{
-        background: 'var(--surface)', border: '1px solid var(--border)',
-        borderRadius: 16, padding: '18px 20px', cursor: 'pointer',
+      <div className="card" style={{
+        cursor: 'pointer',
         borderLeft: `3px solid ${meta.color}`,
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: meta.color, marginBottom: 4 }}>
+            <p className="label" style={{ letterSpacing: '0.08em', color: meta.color, marginBottom: 4 }}>
               {meta.label}
             </p>
             <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>{p.name}</h2>
             {p.goal && <p style={{ fontSize: 13, color: 'var(--muted)' }}>{p.goal}</p>}
             <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
               {p.days_per_week && (
-                <span style={{ fontSize: 11, background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 20, padding: '3px 10px', display: 'flex', gap: 4, alignItems: 'center' }}>
+                <span className="badge">
                   <span style={{ color: 'var(--muted)', fontWeight: 500 }}>рек.</span>
                   <span style={{ color: 'var(--text)', fontWeight: 700 }}>{p.days_per_week}дн/нед</span>
                 </span>
               )}
               {p.difficulty && (
-                <span style={{ fontSize: 11, background: 'var(--surface2)', border: '1px solid var(--border)', borderRadius: 20, padding: '3px 10px', display: 'flex', gap: 4, alignItems: 'center' }}>
+                <span className="badge">
                   <span style={{ color: 'var(--muted)', fontWeight: 500 }}>ур.</span>
                   <span style={{ color: 'var(--text)', fontWeight: 700 }}>{DIFFICULTY_LABEL[p.difficulty] ?? p.difficulty}</span>
                 </span>
@@ -98,12 +97,12 @@ export default function Dashboard() {
   })
 
   return (
-    <div style={{ minHeight: '100dvh', padding: '48px 20px var(--nav-height)' }}>
+    <div className="page-padded">
       <div style={{ marginBottom: 32 }}>
-        <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 8 }}>
+        <p className="label" style={{ letterSpacing: '0.14em', marginBottom: 8 }}>
           Программы тренировок
         </p>
-        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 48, letterSpacing: '0.03em', lineHeight: 1 }}>
+        <h1 className="heading" style={{ fontSize: 48, letterSpacing: '0.03em', lineHeight: 1 }}>
           GYM <span style={{ color: 'var(--accent-a)' }}>DASHBOARD</span>
         </h1>
       </div>

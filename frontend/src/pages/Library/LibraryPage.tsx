@@ -35,7 +35,7 @@ function ExercisePrograms({ exerciseId }: { exerciseId: string }) {
     <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
       {data.map((p, i) => (
         <Link key={i} to={`/programs/${p.program_slug}`}
-          style={{ textDecoration: 'none', fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 7, color: '#d4a0ff', border: '1px solid rgba(212,160,255,0.25)', background: 'rgba(212,160,255,0.08)' }}>
+          className="tag" style={{ textDecoration: 'none', color: '#d4a0ff', border: '1px solid rgba(212,160,255,0.25)', background: 'rgba(212,160,255,0.08)' }}>
           {p.program_name} · {p.day_label}
         </Link>
       ))}
@@ -56,9 +56,9 @@ export default function LibraryPage() {
   const icon = MUSCLE_GROUPS.find(g => g.key === activeGroup)?.icon ?? '💪'
 
   return (
-    <div style={{ minHeight: '100dvh', paddingBottom: 'var(--nav-height)' }}>
+    <div className="page">
       <div style={{ padding: '48px 20px 8px' }}>
-        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 40, color: 'var(--accent-d)' }}>База упражнений</h1>
+        <h1 className="heading" style={{ fontSize: 40, color: 'var(--accent-d)' }}>База упражнений</h1>
         <p style={{ fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>Фильтр по мышцам и типу программы</p>
       </div>
 

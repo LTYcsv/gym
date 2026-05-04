@@ -56,9 +56,9 @@ export default function ProgramPage() {
 
   return (
     <div style={{ minHeight: '100dvh', paddingBottom: 100 }}>
-      <div style={{ padding: '48px 20px 24px', borderBottom: '1px solid var(--border)' }}>
-        <Link to="/" style={{ fontSize: 13, color: 'var(--muted)', textDecoration: 'none' }}>← Назад</Link>
-        <h1 style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: 40, marginTop: 12 }}>{program.name}</h1>
+      <div className="page-header">
+        <Link to="/" className="back-btn">← Назад</Link>
+        <h1 className="heading" style={{ fontSize: 40, marginTop: 12 }}>{program.name}</h1>
         {program.description && <p style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8 }}>{program.description}</p>}
         {enrollment && (
           <p style={{ fontSize: 12, color: 'var(--accent)', marginTop: 10, fontWeight: 600 }}>
@@ -88,7 +88,7 @@ export default function ProgramPage() {
                   }}>Следующая</span>
                 )}
               </div>
-              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--muted)', marginBottom: 4 }}>
+              <p className="label" style={{ letterSpacing: '0.1em', marginBottom: 4 }}>
                 День {slot}
               </p>
               <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)' }}>{day.title}</h3>
