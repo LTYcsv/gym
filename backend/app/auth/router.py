@@ -36,6 +36,6 @@ def auth_dev(db: Session = Depends(get_db)):
     if not settings.DEBUG:
         raise HTTPException(403, "Not available in production")
 
-    user = service.get_or_create_user(db, {"id": 0, "first_name": "Dev", "username": "dev"})
+    user = service.get_or_create_user(db, {"id": -1, "first_name": "Dev", "username": "dev"})
     token = create_token(str(user.id))
     return {"token": token, "user": user}
