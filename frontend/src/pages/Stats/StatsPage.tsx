@@ -55,29 +55,53 @@ function WeeklyProgress({ done, planned }: { done: number; planned: number }) {
   )
 }
 
+const WEEK_DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+
 function MonthCalendar({ dates }: { dates: string[] }) {
   const dateSet = new Set(dates)
   const today = new Date()
-  const days: { date: string; inMonth: boolean }[] = []
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date(today)
-    d.setDate(today.getDate() - i)
-    days.push({ date: d.toLocaleDateString('sv'), inMonth: true })
+  const todayStr = today.toLocaleDateString('sv')
+
+  // Monday of current week (ISO: Mon=0 … Sun=6)
+  const isoDay = (today.getDay() + 6) % 7
+  const monday = new Date(today)
+  monday.setDate(today.getDate() - isoDay)
+
+  // Go back 4 more weeks → 5 full weeks = 35 cells
+  const start = new Date(monday)
+  start.setDate(monday.getDate() - 28)
+
+  const cutoff = new Date(today)
+  cutoff.setDate(today.getDate() - 29)
+
+  const cells: { date: string; inWindow: boolean }[] = []
+  for (let i = 0; i < 35; i++) {
+    const d = new Date(start)
+    d.setDate(start.getDate() + i)
+    const dateStr = d.toLocaleDateString('sv')
+    cells.push({ date: dateStr, inWindow: d >= cutoff && d <= today })
   }
 
   return (
     <Card>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: 4 }}>
-        {days.map(({ date }) => {
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4, marginBottom: 6 }}>
+        {WEEK_DAYS.map(d => (
+          <p key={d} style={{ fontSize: 10, color: 'var(--muted)', fontWeight: 600, textAlign: 'center', margin: 0 }}>
+            {d}
+          </p>
+        ))}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4 }}>
+        {cells.map(({ date, inWindow }) => {
           const worked = dateSet.has(date)
-          const isToday = date === today.toLocaleDateString('sv')
+          const isToday = date === todayStr
           return (
             <div key={date} style={{
               aspectRatio: '1',
               borderRadius: 4,
-              background: worked ? 'var(--accent)' : 'var(--surface2)',
+              background: !inWindow ? 'transparent' : worked ? 'var(--accent)' : 'var(--surface2)',
               border: isToday ? '1px solid var(--accent)' : '1px solid transparent',
-              opacity: worked ? 1 : 0.4,
+              opacity: !inWindow ? 0 : worked ? 1 : 0.35,
             }} />
           )
         })}
