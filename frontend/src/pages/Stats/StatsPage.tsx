@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getStats } from '../../api/stats'
+import { ErrorRetry } from '../../components/ErrorRetry'
 
 const MUSCLE_LABELS: Record<string, string> = {
   back: 'Спина', chest: 'Грудь', shoulders: 'Плечи',
@@ -158,7 +159,7 @@ function Records({ records }: { records: { exercise_name: string; weight_kg: num
 }
 
 export default function StatsPage() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['stats'],
     queryFn: getStats,
   })
@@ -175,6 +176,7 @@ export default function StatsPage() {
       </div>
 
       {isLoading && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Загрузка...</p>}
+      {isError && <ErrorRetry onRetry={() => refetch()} />}
 
       {data && (
         <>

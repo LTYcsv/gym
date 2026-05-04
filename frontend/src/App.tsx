@@ -5,6 +5,7 @@ import WorkoutDayPage from './pages/Program/WorkoutDayPage'
 import LibraryPage from './pages/Library/LibraryPage'
 import StatsPage from './pages/Stats/StatsPage'
 import BottomNav from './components/BottomNav'
+import ErrorBoundary from './components/ErrorBoundary'
 
 const TOP_LEVEL = ['/', '/library', '/stats']
 
@@ -13,7 +14,7 @@ export default function App() {
   const showNav = TOP_LEVEL.includes(pathname)
 
   return (
-    <>
+    <ErrorBoundary>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/programs/:slug" element={<ProgramPage />} />
@@ -22,6 +23,6 @@ export default function App() {
         <Route path="/stats" element={<StatsPage />} />
       </Routes>
       {showNav && <BottomNav />}
-    </>
+    </ErrorBoundary>
   )
 }

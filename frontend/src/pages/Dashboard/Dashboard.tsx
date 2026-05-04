@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { getPrograms } from '../../api/programs'
 import type { Program } from '../../types'
+import { ErrorRetry } from '../../components/ErrorRetry'
 
 const TYPE_META: Record<string, { label: string; color: string }> = {
   hypertrophy:  { label: 'Гипертрофия', color: '#4d9fff' },
@@ -91,7 +92,7 @@ function ProgramCard({ p }: { p: Program }) {
 }
 
 export default function Dashboard() {
-  const { data: programs, isLoading } = useQuery({
+  const { data: programs, isLoading, isError, refetch } = useQuery({
     queryKey: ['programs'],
     queryFn: getPrograms,
   })
@@ -108,6 +109,7 @@ export default function Dashboard() {
       </div>
 
       {isLoading && <p style={{ color: 'var(--muted)', fontSize: 13 }}>Загрузка...</p>}
+      {isError && <ErrorRetry onRetry={() => refetch()} />}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {programs?.map(p => <ProgramCard key={p.id} p={p} />)}

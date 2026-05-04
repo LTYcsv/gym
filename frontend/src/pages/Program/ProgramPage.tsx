@@ -5,6 +5,7 @@ import { getUserProgram, enrollProgram } from '../../api/userPrograms'
 import { getProgramSessionCounts } from '../../api/sessions'
 import { useBackButton } from '../../hooks/useBackButton'
 import OnboardingSheet from '../../components/OnboardingSheet'
+import { ErrorRetry } from '../../components/ErrorRetry'
 
 export default function ProgramPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -12,7 +13,7 @@ export default function ProgramPage() {
   const qc = useQueryClient()
   useBackButton(() => navigate('/'))
 
-  const { data: program, isLoading: programLoading } = useQuery({
+  const { data: program, isLoading: programLoading, isError: programError, refetch: refetchProgram } = useQuery({
     queryKey: ['program', slug],
     queryFn: () => getProgram(slug!),
     enabled: !!slug,
@@ -41,6 +42,7 @@ export default function ProgramPage() {
   })
 
   if (programLoading || enrollLoading) return <p style={{ padding: 20, color: 'var(--muted)' }}>Загрузка...</p>
+  if (programError) return <ErrorRetry onRetry={() => refetchProgram()} />
   if (!program) return <p style={{ padding: 20, color: 'var(--muted)' }}>Программа не найдена</p>
 
   const totalDays = program.workout_days.length

@@ -8,6 +8,7 @@ import { completeWorkout } from '../../api/sessions'
 import type { WorkoutExercise, Exercise } from '../../types'
 import { useBackButton } from '../../hooks/useBackButton'
 import { useTelegram } from '../../hooks/useTelegram'
+import { ErrorRetry } from '../../components/ErrorRetry'
 
 export default function WorkoutDayPage() {
   const { slug, dayId } = useParams<{ slug: string; dayId: string }>()
@@ -38,7 +39,7 @@ export default function WorkoutDayPage() {
   const [weights, setWeights] = useState<Record<string, string>>({})
   const [savedWeights, setSavedWeights] = useState<Record<string, boolean>>({})
 
-  const { data: day, isLoading } = useQuery({
+  const { data: day, isLoading, isError, refetch } = useQuery({
     queryKey: ['workoutDay', dayId],
     queryFn: () => getWorkoutDay(slug!, dayId!),
     enabled: !!slug && !!dayId,
@@ -78,6 +79,7 @@ export default function WorkoutDayPage() {
   })
 
   if (isLoading) return <p style={{ padding: 20, color: 'var(--muted)' }}>Загрузка...</p>
+  if (isError) return <ErrorRetry onRetry={() => refetch()} />
   if (!day) return <p style={{ padding: 20, color: 'var(--muted)' }}>День не найден</p>
 
   const exercises = day.workout_exercises
