@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { getExercises, getExercisePrograms } from '../../api/exercises'
 import type { MuscleGroup, ProgramType } from '../../types'
+import WorkoutTypeFilter from '../../components/WorkoutTypeFilter'
 
 const MUSCLE_GROUPS: { key: MuscleGroup; label: string; icon: string }[] = [
   { key: 'back',        label: 'Спина',        icon: '🔙' },
@@ -20,6 +21,14 @@ const MUSCLE_GROUPS: { key: MuscleGroup; label: string; icon: string }[] = [
   { key: 'forearms',    label: 'Предплечья',   icon: '💪' },
 ]
 
+const TYPE_META: Record<string, { label: string; color: string }> = {
+  strength:     { label: 'Сила',        color: '#ff6b35' },
+  hypertrophy:  { label: 'Масса',       color: '#4d9fff' },
+  cardio:       { label: 'Кардио',      color: '#5ef29a' },
+  hiit:         { label: 'HIIT',        color: '#ffd166' },
+  calisthenics: { label: 'Калистеника', color: '#d4a0ff' },
+}
+
 const EQUIPMENT_LABEL: Record<string, string> = {
   barbell:    'Штанга',
   dumbbells:  'Гантели',
@@ -28,13 +37,6 @@ const EQUIPMENT_LABEL: Record<string, string> = {
   bodyweight: 'Своё тело',
 }
 
-const PROGRAM_TYPES: { key: ProgramType; label: string; color: string }[] = [
-  { key: 'strength',     label: 'Сила',        color: '#ff6b35' },
-  { key: 'hypertrophy',  label: 'Масса',       color: '#4d9fff' },
-  { key: 'cardio',       label: 'Кардио',      color: '#5ef29a' },
-  { key: 'hiit',         label: 'HIIT',        color: '#ff6b35' },
-  { key: 'calisthenics', label: 'Калистеника', color: '#d4a0ff' },
-]
 
 function ExercisePrograms({ exerciseId }: { exerciseId: string }) {
   const { data } = useQuery({
@@ -89,28 +91,7 @@ export default function LibraryPage() {
       </div>
 
       {/* Program type filter */}
-      <div style={{ display: 'flex', gap: 8, padding: '0 20px 12px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-        <button onClick={() => setActiveType(null)} style={{
-          flexShrink: 0, padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 700,
-          cursor: 'pointer',
-          background: activeType === null ? 'var(--surface2)' : 'transparent',
-          color: activeType === null ? 'var(--text)' : 'var(--muted)',
-          border: `1px solid ${activeType === null ? 'rgba(255,255,255,0.2)' : 'var(--border)'}`,
-        }}>
-          Все типы
-        </button>
-        {PROGRAM_TYPES.map(t => (
-          <button key={t.key} onClick={() => setActiveType(activeType === t.key ? null : t.key)} style={{
-            flexShrink: 0, padding: '5px 12px', borderRadius: 20, fontSize: 11, fontWeight: 700,
-            cursor: 'pointer',
-            background: activeType === t.key ? `${t.color}22` : 'transparent',
-            color: activeType === t.key ? t.color : 'var(--muted)',
-            border: `1px solid ${activeType === t.key ? `${t.color}44` : 'var(--border)'}`,
-          }}>
-            {t.label}
-          </button>
-        ))}
-      </div>
+      <WorkoutTypeFilter selected={activeType} onSelect={setActiveType} />
 
       {/* Count */}
       <div style={{ padding: '0 20px 8px' }}>
@@ -132,7 +113,7 @@ export default function LibraryPage() {
                 <p style={{ fontSize: 14, fontWeight: 700 }}>{ex.name}</p>
                 <div style={{ display: 'flex', gap: 4, marginTop: 4, flexWrap: 'wrap' }}>
                   {ex.types.map(t => {
-                    const meta = PROGRAM_TYPES.find(p => p.key === t)
+                    const meta = TYPE_META[t]
                     return (
                       <span key={t} style={{ fontSize: 10, fontWeight: 700, padding: '2px 6px', borderRadius: 5, color: meta?.color ?? 'var(--muted)', background: `${meta?.color ?? '#fff'}18`, border: `1px solid ${meta?.color ?? '#fff'}33` }}>
                         {meta?.label ?? t}
