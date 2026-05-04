@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getStats } from '../../api/stats'
 import { ErrorRetry } from '../../components/ErrorRetry'
+import { buildCalendarCells } from '../../utils/calendar'
 
 const MUSCLE_LABELS: Record<string, string> = {
   back: 'Спина', chest: 'Грудь', shoulders: 'Плечи',
@@ -61,26 +62,7 @@ function MonthCalendar({ dates }: { dates: string[] }) {
   const dateSet = new Set(dates)
   const today = new Date()
   const todayStr = today.toLocaleDateString('sv')
-
-  // Monday of current week (ISO: Mon=0 … Sun=6)
-  const isoDay = (today.getDay() + 6) % 7
-  const monday = new Date(today)
-  monday.setDate(today.getDate() - isoDay)
-
-  // Go back 4 more weeks → 5 full weeks = 35 cells
-  const start = new Date(monday)
-  start.setDate(monday.getDate() - 28)
-
-  const cutoff = new Date(today)
-  cutoff.setDate(today.getDate() - 29)
-
-  const cells: { date: string; inWindow: boolean }[] = []
-  for (let i = 0; i < 35; i++) {
-    const d = new Date(start)
-    d.setDate(start.getDate() + i)
-    const dateStr = d.toLocaleDateString('sv')
-    cells.push({ date: dateStr, inWindow: d >= cutoff && d <= today })
-  }
+  const cells = buildCalendarCells(today)
 
   return (
     <Card>
