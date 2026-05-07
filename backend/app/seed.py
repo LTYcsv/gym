@@ -423,7 +423,7 @@ VSHAPE_DAYS = [
         "label": "День B", "title": "Грудь + Трицепс", "subtitle": "Объём · Детали · Жим",
         "exercises": [
             ("Жим штанги на наклонной скамье",  4, "6–10", 90),
-            ("Жим гантелей лёжа",              3, "10–12", 75),
+            ("Жим гантелей на горизонтальной скамье", 3, "10–12", 75),
             ("Кроссовер в кабельной раме",      3, "13–15", 60),
             ("Трицепсовый блок (верёвка)",      4, "12", 60),
             ("Французский жим лёжа",           3, "10–12", 60),
@@ -444,56 +444,102 @@ VSHAPE_DAYS = [
 ]
 
 
+BW_FUNDAMENTALS_DAYS = [
+    {
+        "label": "День A", "title": "Толчок", "subtitle": "Грудь · Плечи · Трицепс",
+        "exercises": [
+            ("Отжимания широким хватом",             4, "12–15", 75),
+            ("Отжимания узким хватом",               3, "10–12", 60),
+            ("Отжимания с ногами на возвышении",     3, "10–12", 60),
+            ("Отжимания на брусьях",                 3, "8–12",  75),
+            ("Пайк-отжимания",                       3, "12",    60),
+            ("Планка",                               3, "45–60 сек", 60),
+        ],
+    },
+    {
+        "label": "День B", "title": "Тяга", "subtitle": "Спина · Бицепс · Кор",
+        "exercises": [
+            ("Подтягивания широким хватом",          4, "6–10",  90),
+            ("Подтягивания нейтральным хватом",      3, "8–10",  75),
+            ("Австралийские подтягивания",           3, "12–15", 60),
+            ("Подтягивания обратным хватом",         3, "8–10",  75),
+            ("Разведение рук лёжа на полу",          3, "15",    60),
+            ("Подъём ног в висе",                    3, "12–15", 60),
+        ],
+    },
+    {
+        "label": "День C", "title": "Ноги + Кор", "subtitle": "Квадрицепс · Ягодицы · Пресс",
+        "exercises": [
+            ("Приседания с собственным весом",       4, "20",           60),
+            ("Болгарские сплит-приседания",          3, "12 каж. ногу", 75),
+            ("Выпады шагающие",                      3, "12 каж. ногу", 60),
+            ("Ягодичный мостик с собственным весом", 4, "20",           60),
+            ("Подъём на носки на ступеньке",         4, "20 каж. ногу", 45),
+            ("Скручивания лёжа",                     3, "20",           45),
+            ("Велосипед лёжа",                       3, "30",           45),
+        ],
+    },
+]
+
+
+def _seed_program(db, meta: dict, days_data: list, ex_map: dict):
+    program = Program(**meta)
+    db.add(program)
+    db.flush()
+    for day_num, day_data in enumerate(days_data, start=1):
+        day = WorkoutDay(
+            program_id=program.id,
+            label=day_data["label"],
+            title=day_data["title"],
+            subtitle=day_data["subtitle"],
+            day_number=day_num,
+        )
+        db.add(day)
+        db.flush()
+        for order, (ex_name, sets, reps, rest) in enumerate(day_data["exercises"]):
+            ex = ex_map.get(ex_name)
+            if not ex:
+                print(f"  WARNING: exercise not found: {ex_name}")
+                continue
+            db.add(WorkoutExercise(
+                workout_day_id=day.id,
+                exercise_id=ex.id,
+                sets=sets, reps=reps, rest_seconds=rest, order=order,
+            ))
+
+
 def run():
     db = SessionLocal()
     try:
-        if db.query(Exercise).count() > 0:
-            print("Already seeded, skipping.")
-            return
+        if db.query(Exercise).count() == 0:
+            ex_map: dict[str, Exercise] = {}
+            for data in EXERCISES:
+                ex = Exercise(**data)
+                db.add(ex)
+                db.flush()
+                ex_map[ex.name] = ex
+            print("Exercises seeded.")
+        else:
+            ex_map = {ex.name: ex for ex in db.query(Exercise).all()}
+            print("Exercises already exist, loading from DB.")
 
-        ex_map: dict[str, Exercise] = {}
-        for data in EXERCISES:
-            ex = Exercise(**data)
-            db.add(ex)
-            db.flush()
-            ex_map[ex.name] = ex
+        if not db.query(Program).filter_by(slug="v-shape").first():
+            _seed_program(db, dict(
+                name="V-Shape Plan",
+                slug="v-shape",
+                description="Программа на набор массы и формирование V-образного силуэта.",
+                type="hypertrophy", days_per_week=3, difficulty="intermediate", goal="Набор массы",
+            ), VSHAPE_DAYS, ex_map)
+            print("V-Shape program seeded.")
 
-        program = Program(
-            name="V-Shape Plan",
-            slug="v-shape",
-            description="Программа на набор массы и формирование V-образного силуэта.",
-            type="hypertrophy",
-            days_per_week=3,
-            difficulty="intermediate",
-            goal="Набор массы",
-        )
-        db.add(program)
-        db.flush()
-
-        for day_num, day_data in enumerate(VSHAPE_DAYS, start=1):
-            day = WorkoutDay(
-                program_id=program.id,
-                label=day_data["label"],
-                title=day_data["title"],
-                subtitle=day_data["subtitle"],
-                day_number=day_num,
-            )
-            db.add(day)
-            db.flush()
-
-            for order, (ex_name, sets, reps, rest) in enumerate(day_data["exercises"]):
-                ex = ex_map.get(ex_name)
-                if not ex:
-                    print(f"  WARNING: exercise not found: {ex_name}")
-                    continue
-                db.add(WorkoutExercise(
-                    workout_day_id=day.id,
-                    exercise_id=ex.id,
-                    sets=sets,
-                    reps=reps,
-                    rest_seconds=rest,
-                    order=order,
-                ))
+        if not db.query(Program).filter_by(slug="bodyweight-fundamentals").first():
+            _seed_program(db, dict(
+                name="Bodyweight Fundamentals",
+                slug="bodyweight-fundamentals",
+                description="Программа на набор силы и массы без инвентаря. Подходит для начинающих и среднего уровня.",
+                type="strength", days_per_week=3, difficulty="beginner", goal="Сила и масса",
+            ), BW_FUNDAMENTALS_DAYS, ex_map)
+            print("Bodyweight Fundamentals program seeded.")
 
         db.commit()
         print("Seed complete.")
