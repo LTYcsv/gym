@@ -241,6 +241,9 @@ EXERCISES = [
     dict(name="Разгибание на блоке одной рукой", muscle_group="triceps",
          types=["hypertrophy"], equipment=["cable"],
          technique="Верхний блок, одна рука, нейтральный хват. Локоть зафиксирован у головы. Полное разгибание вниз — максимальное растяжение длинной головки."),
+    dict(name="Отжимания узким хватом", muscle_group="triceps",
+         types=["strength", "hypertrophy", "calisthenics"], equipment=["bodyweight"],
+         technique="Руки на ширине плеч или уже, локти идут строго вдоль тела. Акцент на трицепс — в отличие от широких отжиманий грудь почти не включается."),
     # ── QUADRICEPS (additional) ──
     dict(name="Гакк-приседания", muscle_group="quadriceps", types=["hypertrophy"], equipment=["machine"], technique="Ноги на платформе, стопы на ширине плеч. Колени над носками, спина прижата. Акцент на квадрицепс."),
     dict(name="Выпады вперёд", muscle_group="quadriceps", types=["hypertrophy", "strength"], equipment=["bodyweight", "dumbbells"], technique="Шаг вперёд, заднее колено почти касается пола. Переднее колено не выходит за носок. Корпус вертикально."),
@@ -262,6 +265,9 @@ EXERCISES = [
     dict(name="Приседания в прыжке", muscle_group="quadriceps",
          types=["calisthenics", "cardio"], equipment=["bodyweight"],
          technique="Обычное приседание с взрывным выпрыгиванием вверх. Приземляйся мягко, перекатом с носка на пятку. Развивает взрывную силу."),
+    dict(name="Выпады шагающие", muscle_group="quadriceps",
+         types=["hypertrophy", "calisthenics"], equipment=["bodyweight"],
+         technique="Чередующиеся выпады вперёд в движении. Шагаешь на каждый выпад — динамичнее статичных. Развивает координацию и баланс. Можно с гантелями для усложнения."),
     # ── HAMSTRINGS (additional) ──
     dict(name="Сгибание ног стоя в тренажёре", muscle_group="hamstrings", types=["hypertrophy"], equipment=["machine"], technique="Одна нога, таз прижат к тренажёру. Полное сгибание, медленный контролируемый возврат 3 сек."),
     dict(name="Становая тяга на прямых ногах", muscle_group="hamstrings", types=["strength", "hypertrophy"], equipment=["barbell", "dumbbells"], technique="Ноги почти прямые, штанга вдоль голеней. Наклон до горизонтали, спина нейтральная. Чувствуйте растяжение бицепса бедра."),
@@ -389,6 +395,15 @@ EXERCISES = [
     dict(name="Приседания сумо со штангой", muscle_group="glutes",
          types=["strength", "hypertrophy"], equipment=["barbell"],
          technique="Широкая постановка ног, носки сильно развёрнуты наружу. По сравнению с обычными приседаниями сильнее включает ягодицы и внутреннюю поверхность бедра."),
+    dict(name="Выпады шагающие", muscle_group="glutes",
+         types=["hypertrophy", "calisthenics"], equipment=["bodyweight"],
+         technique="Чередующиеся выпады вперёд в движении. Ягодицы активно работают при разгибании бедра в каждом шаге. Держи корпус вертикально, не наклоняй вперёд."),
+    dict(name="Разведение рук лёжа на полу", muscle_group="shoulders",
+         types=["hypertrophy", "calisthenics"], equipment=["bodyweight"],
+         technique="Лёжа на полу, руки вытянуты в стороны с лёгким сгибом в локтях. Сводишь руки перед собой — акцент на заднюю дельту и ромбовидные. Медленное, контролируемое движение."),
+    dict(name="Разведение рук лёжа на полу", muscle_group="back",
+         types=["hypertrophy", "calisthenics"], equipment=["bodyweight"],
+         technique="Лёжа на полу, руки вытянуты в стороны с лёгким сгибом в локтях. Сводишь руки перед собой — прорабатывает ромбовидные и задние пучки дельт. Медленное движение без рывков."),
 ]
 
 # V-Shape program days & exercises
