@@ -511,17 +511,17 @@ def _seed_program(db, meta: dict, days_data: list, ex_map: dict):
 def run():
     db = SessionLocal()
     try:
-        if db.query(Exercise).count() == 0:
-            ex_map: dict[str, Exercise] = {}
-            for data in EXERCISES:
+        existing_names = {ex.name for ex in db.query(Exercise.name).all()}
+        ex_map: dict[str, Exercise] = {}
+        for data in EXERCISES:
+            if data["name"] not in existing_names:
                 ex = Exercise(**data)
                 db.add(ex)
                 db.flush()
                 ex_map[ex.name] = ex
-            print("Exercises seeded.")
-        else:
-            ex_map = {ex.name: ex for ex in db.query(Exercise).all()}
-            print("Exercises already exist, loading from DB.")
+            else:
+                ex_map[data["name"]] = db.query(Exercise).filter_by(name=data["name"]).first()
+        print(f"Exercises: {len(EXERCISES) - len(existing_names)} new, {len(existing_names)} existing.")
 
         if not db.query(Program).filter_by(slug="v-shape").first():
             _seed_program(db, dict(
