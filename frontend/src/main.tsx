@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { authWithTelegram, authDev } from './api/auth'
 import App from './App'
-import './index.css'
+import './index.css' 
 
 window.onerror = (msg, src, line, col, err) => {
   console.error('[uncaught]', { msg, src, line, col, stack: err?.stack })
