@@ -305,9 +305,23 @@ EXERCISES = [
     dict(name="Удержание блина", muscle_group="forearms", types=["strength"], equipment=["barbell"], technique="Зажать блин (10–25 кг) кончиками пальцев и удерживать до отказа. Лучшее упражнение на силу хвата."),
     # ── GLUTES ──
     dict(name="Ягодичный мостик в тренажёре", muscle_group="glutes", types=["hypertrophy"], equipment=["machine"], technique="Специальный тренажёр для мостика. Позволяет работать с большим весом безопасно. Фокус на сжатии ягодиц."),
-    dict(name="Отведение ноги в кроссовере", muscle_group="glutes", types=["hypertrophy"], equipment=["cable"], technique="Манжета на щиколотке, нижний блок. Отводить ногу назад-вверх. Корпус слегка наклонён вперёд, не раскачивайтесь."),
+    dict(name="Отведение ноги в кроссовере", muscle_group="glutes", types=["hypertrophy"], equipment=["cable", "bodyweight"], technique="Манжета на щиколотке у нижнего блока или стоя у опоры. Отводить ногу назад-вверх. Корпус слегка наклонён вперёд, не раскачивайтесь."),
     dict(name="Сумо-приседания с гантелью", muscle_group="glutes", types=["hypertrophy"], equipment=["dumbbells"], technique="Широкая стойка, носки 45°, гантель между ног. Акцент на ягодицы и приводящие мышцы. Колени над носками."),
     dict(name="Гипертрастер (Kickback) в тренажёре", muscle_group="glutes", types=["hypertrophy"], equipment=["machine"], technique="Стоя лицом к тренажёру, толкать платформу назад-вверх ягодичным усилием. Нога почти прямая в пике."),
+    dict(name="Ягодичный мостик с собственным весом", muscle_group="glutes",
+         types=["hypertrophy", "calisthenics"], equipment=["bodyweight"],
+         difficulty="beginner",
+         technique="Лёжа на спине, колени согнуты, стопы на полу. Поднимай таз вверх сжимая ягодицы — пауза 2 сек вверху. Базовое упражнение для новичков и разминки."),
+    dict(name="Становая тяга (акцент ягодицы)", muscle_group="glutes",
+         types=["strength", "hypertrophy"], equipment=["barbell"],
+         difficulty="advanced",
+         technique="Штанга у голеней, стопы на ширине бёдер. Спина прямая. В верхней точке — полное разгибание с акцентом на сжатие ягодиц. Тяни через пятки."),
+    dict(name="Выпады назад", muscle_group="glutes",
+         types=["hypertrophy", "calisthenics"], equipment=["bodyweight", "dumbbells"],
+         technique="Шаг назад вместо вперёд — меньше нагрузки на колено, больше акцент на ягодицы. Опускай заднее колено к полу, корпус вертикально."),
+    dict(name="Приседания сумо со штангой", muscle_group="glutes",
+         types=["strength", "hypertrophy"], equipment=["barbell"],
+         technique="Широкая постановка ног, носки сильно развёрнуты наружу. По сравнению с обычными приседаниями сильнее включает ягодицы и внутреннюю поверхность бедра."),
 ]
 
 # V-Shape program days & exercises
