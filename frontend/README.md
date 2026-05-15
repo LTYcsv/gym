@@ -1,73 +1,63 @@
-# React + TypeScript + Vite (мб)
+# Frontend — Gym App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + TypeScript Single Page Application, deployed to Vercel as a Telegram Mini App.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| | |
+|---|---|
+| Framework | React 19 + TypeScript |
+| Build tool | Vite 8 |
+| Routing | React Router DOM v7 |
+| Server state | TanStack Query v5 |
+| HTTP | Axios |
+| Telegram SDK | @twa-dev/sdk |
+| Tests | vitest |
 
-## React Compiler
+## Pages
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Route | Page | Description |
+|---|---|---|
+| `/` | Dashboard | Active program overview, weekly schedule, progress ring |
+| `/programs/:slug` | Program | Workout days list |
+| `/programs/:slug/days/:id` | WorkoutDay | Exercise list with sets/reps, weight input, swap |
+| `/library` | Library | Browse 150+ exercises by muscle group |
+| `/stats` | Stats | Streak, workout calendar, personal records |
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev   # http://localhost:5174
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Vite proxies `/api → http://localhost:8000` automatically in development, so no env file is needed locally.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Environment Variables
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+In production (Vercel), set:
+
+```
+VITE_API_URL=https://your-backend.up.railway.app
+```
+
+## Scripts
+
+```bash
+npm run dev      # dev server
+npm run build    # production build
+npm run test     # vitest
+npm run lint     # eslint
+```
+
+## Structure
+
+```
+src/
+├── api/          # Axios instance, typed API functions
+├── components/   # Shared UI: BottomNav, sheets, cards
+├── hooks/        # TanStack Query hooks (useProgram, useStats, …)
+├── pages/        # Route-level components
+├── types/        # TypeScript interfaces mirroring backend schemas
+└── utils/        # Date helpers, formatting
 ```
