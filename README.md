@@ -16,7 +16,7 @@
 [![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?style=flat-square&logo=vercel)](https://vercel.com)
 [![Tests](https://img.shields.io/badge/Tests-28%20passed-5ef29a?style=flat-square)](./backend/tests)
 
-[**→ Открыть приложение**](https://gym-ruby-tau.vercel.app) · [**→ API Docs**](https://gym-production-4052.up.railway.app/docs)
+[**→ API Docs**](https://gym-production-4052.up.railway.app/docs)
 
 </div>
 
